@@ -240,7 +240,28 @@ class Contact {
             if (!flag) {
                 System.out.println("Contact Not Found for "+name);
             }
+    }
+
+    public void deleteContact(String name){
+        boolean flag = false;
+        Contact tempContact = new Contact();
+        for (Contact contact : contactList) {
+            if (name.equalsIgnoreCase(contact.getFname())) {
+                flag = true;
+                tempContact = contact;
+                break;
+            }
         }
+        if (flag) {
+            contactList.remove(tempContact);
+            System.out.println("Contact Deleted Successfully...!");
+            System.out.println("=====================================");
+        }
+        if (!flag) {
+            System.out.println("Contact Not found for "+name);
+            System.out.println("=====================================");
+        }
+    }
 
     public void displayContact(){
         for (Contact contact : contactList) {
@@ -279,6 +300,7 @@ public class AddressBook {
                 System.out.println("Select Operation");
                 System.out.println("1. Add Contact");
                 System.out.println("2. Edit Contact");
+                System.out.println("3. Delete Contact");
                 System.out.println("3. Display All Contact");
                 System.out.println("0. Exit");
     
@@ -295,8 +317,15 @@ public class AddressBook {
                         contact.editContact(name);
                         System.out.println("=====================================");
                         break;
-    
+                    
+
                     case 3:
+                    System.out.println("Enter Name to Delete Contact :");
+                    String nameDel = scanner.nextLine();
+                    contact.deleteContact(nameDel);
+                    break;
+                    
+                    case 4:
                         contact.displayContact();
                         break;
     
