@@ -301,7 +301,7 @@ public class AddressBook {
                 System.out.println("1. Add Contact");
                 System.out.println("2. Edit Contact");
                 System.out.println("3. Delete Contact");
-                System.out.println("3. Display All Contact");
+                System.out.println("4. Display All Contact");
                 System.out.println("0. Exit");
     
                 int choice = scanner.nextInt();
