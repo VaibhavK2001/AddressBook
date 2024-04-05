@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 class Contact {
 
     String fname;
@@ -42,6 +44,30 @@ public class AddressBook {
         System.out.println("\nWelcome to Address Book Program\n");
         Contact contact = new Contact("Vaibhav", "Kumbhar", "Chembur", "Mumbai", "Maharashtra", 400071,"vaibhavkumbhar@gmail.com", "8108910982");
         System.out.println(contact);
-    }
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Contact Details");
+        System.out.println("Enter First Name ");
+        String fname = scanner.nextLine();
+        System.out.println("Enter Last Name : ");
+        String lname = scanner.nextLine();
+        System.out.println("Enter Address : ");
+        String address = scanner.nextLine();
+        System.out.println("Enter City : ");
+        String city = scanner.nextLine();
+        System.out.println("Enter State : ");
+        String state = scanner.nextLine();
+        System.out.println("Enter Zip code :");
+        int zip = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter Phone No : ");
+        String phoneNo = scanner.nextLine();
+        System.out.println("Enter Email : ");
+        String email = scanner.nextLine();
+
+        Contact contact2 = new Contact(fname, lname, address, city, state, zip, email, phoneNo);
+        System.out.println(contact2);
+    } 
+
     
 }
