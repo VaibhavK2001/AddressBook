@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 class Contact {
@@ -288,61 +290,130 @@ class Contact {
 
 
 public class AddressBook {
+    
+    Contact contact = new Contact();
+    Map<String, AddressBook> addressBooks;
+    
+    
+    public AddressBook() {
+        addressBooks = new HashMap<>();
+    }
+
+    public void addAddressBook(String name){
+        addressBooks.put(name, new AddressBook());
+        System.out.println("Address Book created Successfully for "+name);
+    }
+
+    public AddressBook searchAddressbook(String name){
+        AddressBook addBook = new AddressBook();
+        boolean flag = false;
+        for (Map.Entry<String, AddressBook> set : addressBooks.entrySet()) {
+            if (set.getKey().equalsIgnoreCase(name)) {
+                addBook = set.getValue();
+                flag = true;
+                break;
+            }
+        }
+        if (flag) {
+            return addBook;
+        }
+        else{
+            return null;
+        }
         
-        public static void main(String[] args) {
+    } 
+        
+    public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("\n========= Welcome to Address Book Program =========\n");
-            
-            Contact contact = new Contact();
-            boolean flag = true;
-            while (flag) {
-                System.out.println();
-                System.out.println("Select Operation");
-                System.out.println("1. Add Contact");
-                System.out.println("2. Edit Contact");
-                System.out.println("3. Delete Contact");
-                System.out.println("4. Display All Contact");
-                System.out.println("0. Exit");
-    
-                int choice = scanner.nextInt();
-                scanner.nextLine();
-                switch (choice) {
-                    case 1:
-                        contact.addContact();
-                        break;
-                    
-                    case 2:
+
+        AddressBook addressbooks = new AddressBook();
+
+        boolean flag = true;
+        while (flag) {
+            System.out.println();
+            System.out.println("Select Operation");
+            System.out.println("1. Create New AddressBook");
+            System.out.println("2. Add Contact");
+            System.out.println("3. Edit Contact");
+            System.out.println("4. Delete Contact");
+            System.out.println("5. Display All Contact");
+            System.out.println("0. Exit");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter Name for new AddressBook : ");
+                    String addName = scanner.nextLine();
+                    addressbooks.addAddressBook(addName);
+                    System.out.println("=====================================");
+                    break;
+                
+                case 2:
+                    System.out.println("Enter Name of AddressBook to add Contact : ");
+                    String name1 = scanner.nextLine();
+                    AddressBook addressbook2 =  addressbooks.searchAddressbook(name1);
+                    if (addressbook2 != null) {
+                        addressbook2.contact.addContact();
+                    }else{
+                        System.out.println("AddressBook Not Found!");
+                    }
+                    break;
+
+                case 3:
+                    System.out.println("Enter Name of AddressBook to edit Contact : ");
+                    String name2 = scanner.nextLine();
+                    AddressBook addressbook3 =  addressbooks.searchAddressbook(name2);
+                    if (addressbook3 != null) {
                         System.out.println("Enter Name to edit Contact");
                         String name = scanner.nextLine();
-                        contact.editContact(name);
-                        System.out.println("=====================================");
-                        break;
-                    
-
-                    case 3:
-                    System.out.println("Enter Name to Delete Contact :");
-                    String nameDel = scanner.nextLine();
-                    contact.deleteContact(nameDel);
+                        addressbook3.contact.editContact(name);
+                    System.out.println("=====================================");
+                    }else{
+                        System.out.println("AddressBook Not Found!");
+                    }
                     break;
-                    
-                    case 4:
-                        contact.displayContact();
-                        break;
-    
-                    case 0:
-                        flag = false;
-                        break;
-                    
-                    default:
-                        System.out.println("\nEnter valid input!");
-                        break;
-                }
+
+                case 4:
+                    System.out.println("Enter Name to of AddressBook to Delete Contact");
+                    String name = scanner.nextLine();
+                    AddressBook addressbook4 =  addressbooks.searchAddressbook(name);
+                    if (addressbook4 != null) {
+                        System.out.println("Enter Name to Delete Contact :");
+                        String nameDel = scanner.nextLine();
+                        addressbook4.contact.deleteContact(nameDel);
+                    System.out.println("=====================================");
+                    }else{
+                        System.out.println("AddressBook Not Found!");
+                    }
+                    break;
+
+                case 5:
+                    System.out.println("Enter Name of AddressBook to view Contact :");
+                    String viewName  = scanner.nextLine();
+                    AddressBook addressbook5 =  addressbooks.searchAddressbook(viewName);
+                    if (addressbook5 != null) {
+                        addressbook5.contact.displayContact();
+                    }else{
+                        System.out.println("AddressBook Not Found!");
+                    }
+                    break;
+
+                case 0:
+                    flag = false;
+                    break;
+                
+                default:
+                    System.out.println("\nEnter valid input!");
+                    break;
             }
-    
-            System.out.println("\nExiting Program...");
-            System.out.println("Thank You!");
-    
-            scanner.close();
+        }
+
+        System.out.println("\nExiting Program...");
+        System.out.println("Thank You!");
+
+        scanner.close();
     } 
 
     
