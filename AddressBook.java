@@ -84,7 +84,7 @@ class Contact {
         //Empty Constructor
     }
 
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in); 
     
     ArrayList<Contact> contactList = new ArrayList<Contact>();
 
@@ -99,34 +99,37 @@ class Contact {
         this.email = email;
     }
 
-    public void addContact(){
+    public boolean addContact(){
 
         System.out.println();
         System.out.println("Enter Contact Details\n");
         System.out.println("Enter First Name :");
         String fname = scanner.nextLine();
-        System.out.println("Enter Last Name : ");
-        String lname = scanner.nextLine();
-        System.out.println("Enter Address : ");
-        String address = scanner.nextLine();
-        System.out.println("Enter City : ");
-        String city = scanner.nextLine();
-        System.out.println("Enter State : ");
-        String state = scanner.nextLine();
-        System.out.println("Enter Zip code :");
-        int zip = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Enter Phone No : ");
-        String phoneNo = scanner.nextLine();
-        System.out.println("Enter Email : ");
-        String email = scanner.nextLine();
 
-        Contact contact = new Contact(fname, lname, address, city, state, zip, email, phoneNo);
-        if (contact != null) {
+        if (contactList.stream().anyMatch(contact->contact.getFname().equalsIgnoreCase(fname))) {
+            return false;
+        }else{
+            System.out.println("Enter Last Name : ");
+            String lname = scanner.nextLine();
+            System.out.println("Enter Address : ");
+            String address = scanner.nextLine();
+            System.out.println("Enter City : ");
+            String city = scanner.nextLine();
+            System.out.println("Enter State : ");
+            String state = scanner.nextLine();
+            System.out.println("Enter Zip code :");
+            int zip = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Enter Phone No : ");
+            String phoneNo = scanner.nextLine();
+            System.out.println("Enter Email : ");
+            String email = scanner.nextLine();
+
+            Contact contact = new Contact(fname, lname, address, city, state, zip, email, phoneNo);
             contactList.add(contact);
-            System.out.println("\nContact Added Successfully...\n");
-            System.out.println("=====================================");
+            return true;
         }
+
     }
 
     public void editContact(String name){
@@ -285,6 +288,7 @@ class Contact {
         System.out.println("Contact Zip : "+zip);
         System.out.println("Contact Phone No : "+pohneNo);
         System.out.println("Contact Email : "+email);
+        System.out.println("=====================================");
         return"";
     }
 
@@ -302,9 +306,18 @@ public class AddressBook {
     }
 
     public void addAddressBook(String name){
-        addressBooks.put(name, new AddressBook());
-        System.out.println("Address Book created Successfully for "+name);
+
+        for (Map.Entry<String, AddressBook> entry: addressBooks.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(name)) {
+                System.out.println("AddressBook already exsits for "+name);
+                return;
+            }
+        }
+            addressBooks.put(name, new AddressBook());
+            System.out.println("Address Book created Successfully for "+name);
+        
     }
+    
 
     public AddressBook searchAddressbook(String name){
         AddressBook addBook = new AddressBook();
@@ -328,6 +341,7 @@ public class AddressBook {
     public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
             System.out.println("\n========= Welcome to Address Book Program =========\n");
+
 
         AddressBook addressbooks = new AddressBook();
 
@@ -357,7 +371,14 @@ public class AddressBook {
                     String name1 = scanner.nextLine();
                     AddressBook addressbook2 =  addressbooks.searchAddressbook(name1);
                     if (addressbook2 != null) {
-                        addressbook2.contact.addContact();
+                        if (addressbook2.contact.addContact()) {
+                            System.out.println("\nContact Added Successfully...\n");
+                            System.out.println("=====================================");
+                        }else{
+                            System.out.println("Contact is Exsiting for given name");
+                            System.out.println("Please try again with another name...");
+                            System.out.println("=====================================");
+                        }
                     }else{
                         System.out.println("AddressBook Not Found!");
                     }
