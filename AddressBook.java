@@ -155,6 +155,22 @@ class Contact {
         }
     }
 
+    public void countByCity(){
+        long count = 0;
+        for (Map.Entry<String, List<String>> entry : personbyCity.entrySet()) {
+            count = entry.getValue().stream().count();
+            System.out.println("City : "+entry.getKey()+" || No. of Contact : "+count);
+        }
+    }
+
+    public void countByState(){
+        long count = 0;
+        for (Map.Entry<String, List<String>> entry : personbyState.entrySet()) {
+            count = entry.getValue().stream().count();
+            System.out.println("State : "+entry.getKey()+" || No. of Contact : "+count);
+        }
+    }
+
     public void personCity(){
         if (personbyCity.isEmpty()) {
             System.out.println("No Contact Found..!");
@@ -456,6 +472,8 @@ public class AddressBook {
             System.out.println("7. Search Contact by State");
             System.out.println("8. Person by City");
             System.out.println("9. Person by State");
+            System.out.println("10. Count of Person by City");
+            System.out.println("11. Count of Person by State");
             System.out.println("0. Exit");
 
             int choice = scanner.nextInt();
@@ -545,6 +563,16 @@ public class AddressBook {
                 case 9:
                     System.out.println("Person in various State : ");
                     addressbooks.contact.personState();
+                    break;
+
+                case 10:
+                    System.out.println("------------------------------------");
+                    addressbooks.contact.countByCity();
+                    break;
+                
+                case 11:
+                    System.out.println("------------------------------------");
+                    addressbooks.contact.countByState();
                     break;
 
                 case 0:
