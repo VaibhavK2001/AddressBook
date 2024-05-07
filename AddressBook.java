@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,6 +21,7 @@ class Contact {
     ArrayList<Contact> contactList = new ArrayList<Contact>();
     static Map<String, List<String>> personbyCity = new HashMap<>();
     static Map<String, List<String>> personbyState = new HashMap<>();
+    static List<String> nameList = new ArrayList<>();
 
     public String getFname() {
         return fname;
@@ -132,6 +135,7 @@ class Contact {
             contactList.add(contact);
             addPersonCity(city, fname);
             addPersonState(state, fname);
+            nameList.add(fname);
             return true;
         }
 
@@ -161,6 +165,7 @@ class Contact {
             count = entry.getValue().stream().count();
             System.out.println("City : "+entry.getKey()+" || No. of Contact : "+count);
         }
+        System.out.println("------------------------------------");
     }
 
     public void countByState(){
@@ -169,6 +174,7 @@ class Contact {
             count = entry.getValue().stream().count();
             System.out.println("State : "+entry.getKey()+" || No. of Contact : "+count);
         }
+        System.out.println("------------------------------------");
     }
 
     public void personCity(){
@@ -179,6 +185,7 @@ class Contact {
                 System.out.println(entry);
             }
         }
+        System.out.println("------------------------------------");
     }
 
     public void personState(){
@@ -189,6 +196,16 @@ class Contact {
                 System.out.println(entry);
             }
         }
+        System.out.println("------------------------------------");
+    }
+
+    public void sortbyName(){
+        Collections.sort(nameList);
+        Iterator<String> itr = nameList.iterator();
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+        System.out.println("------------------------------------");
     }
 
     public void editContact(String name){
@@ -408,7 +425,7 @@ public class AddressBook {
         List<Contact> contactList = new ArrayList<>();
         boolean flag = false;
     
-
+        System.out.println("------------------------------------");
         for (List<Contact> list : contacts) {
             contactList = list.stream().filter(contact -> contact.getCity().equalsIgnoreCase(city)).toList();
             if (!contactList.isEmpty()) {
@@ -435,7 +452,7 @@ public class AddressBook {
         List<Contact> contactList = new ArrayList<>();
         boolean flag = false;
     
-
+        System.out.println("------------------------------------");
         for (List<Contact> list : contacts) {
             contactList = list.stream().filter(contact -> contact.getState().equalsIgnoreCase(state)).toList();
             if (!contactList.isEmpty()) {
@@ -474,6 +491,7 @@ public class AddressBook {
             System.out.println("9. Person by State");
             System.out.println("10. Count of Person by City");
             System.out.println("11. Count of Person by State");
+            System.out.println("12. Sort by Name");
             System.out.println("0. Exit");
 
             int choice = scanner.nextInt();
@@ -556,11 +574,13 @@ public class AddressBook {
                     break;
 
                 case 8:
+                    System.out.println("------------------------------------");
                     System.out.println("Person in various City :");
                     addressbooks.contact.personCity();
                     break;
                 
                 case 9:
+                    System.out.println("------------------------------------");
                     System.out.println("Person in various State : ");
                     addressbooks.contact.personState();
                     break;
@@ -573,6 +593,12 @@ public class AddressBook {
                 case 11:
                     System.out.println("------------------------------------");
                     addressbooks.contact.countByState();
+                    break;
+                
+                case 12:
+                    System.out.println("------------------------------------");
+                    System.out.println("Contacts sorted by Name (A-Z)");
+                    addressbooks.contact.sortbyName();
                     break;
 
                 case 0:
