@@ -22,6 +22,9 @@ class Contact {
     static Map<String, List<String>> personbyCity = new HashMap<>();
     static Map<String, List<String>> personbyState = new HashMap<>();
     static List<String> nameList = new ArrayList<>();
+    static List<String> cityList = new ArrayList<>();
+    static List<String> stateList = new ArrayList<>();
+    static List<Integer> zipList = new ArrayList<>();
 
     public String getFname() {
         return fname;
@@ -136,6 +139,9 @@ class Contact {
             addPersonCity(city, fname);
             addPersonState(state, fname);
             nameList.add(fname);
+            cityList.add(city);
+            stateList.add(state);
+            zipList.add(Integer.valueOf(zip));
             return true;
         }
 
@@ -202,6 +208,33 @@ class Contact {
     public void sortbyName(){
         Collections.sort(nameList);
         Iterator<String> itr = nameList.iterator();
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+        System.out.println("------------------------------------");
+    }
+
+    public void sortbyCity(){
+        Collections.sort(cityList);
+        Iterator itr = cityList.iterator();
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+        System.out.println("------------------------------------");
+    }
+    
+    public void sortbyState(){
+        Collections.sort(stateList);
+        Iterator itr = stateList.iterator();
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+        System.out.println("------------------------------------");
+    }
+    
+    public void sortbyZip(){
+        Collections.sort(zipList);
+        Iterator itr = zipList.iterator();
         while (itr.hasNext()) {
             System.out.println(itr.next());
         }
@@ -492,6 +525,9 @@ public class AddressBook {
             System.out.println("10. Count of Person by City");
             System.out.println("11. Count of Person by State");
             System.out.println("12. Sort by Name");
+            System.out.println("13. Sort by City");
+            System.out.println("14. Sort by State");
+            System.out.println("15. Sort by Zip");
             System.out.println("0. Exit");
 
             int choice = scanner.nextInt();
@@ -597,8 +633,26 @@ public class AddressBook {
                 
                 case 12:
                     System.out.println("------------------------------------");
-                    System.out.println("Contacts sorted by Name (A-Z)");
+                    System.out.println("Contacts sorted by Name");
                     addressbooks.contact.sortbyName();
+                    break;
+                    
+                case 13:
+                    System.out.println("------------------------------------");
+                    System.out.println("Sorted by City");
+                    addressbooks.contact.sortbyCity();
+                    break;
+                
+                case 14:
+                    System.out.println("------------------------------------");
+                    System.out.println("Sorted by State");
+                    addressbooks.contact.sortbyState();
+                    break;
+
+                case 15:
+                    System.out.println("------------------------------------");
+                    System.out.println("Sorted by Zip");
+                    addressbooks.contact.sortbyZip();
                     break;
 
                 case 0:
