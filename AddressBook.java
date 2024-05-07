@@ -16,6 +16,10 @@ class Contact {
     private String email;
     private String pohneNo;
 
+    ArrayList<Contact> contactList = new ArrayList<Contact>();
+    static Map<String, List<String>> personbyCity = new HashMap<>();
+    static Map<String, List<String>> personbyState = new HashMap<>();
+
     public String getFname() {
         return fname;
     }
@@ -86,7 +90,6 @@ class Contact {
 
     Scanner scanner = new Scanner(System.in); 
     
-    ArrayList<Contact> contactList = new ArrayList<Contact>();
 
     public Contact(String fname, String lname, String address, String city, String state, int zip,String email,String pohneNo) {
         this.fname = fname;
@@ -127,9 +130,49 @@ class Contact {
 
             Contact contact = new Contact(fname, lname, address, city, state, zip, email, phoneNo);
             contactList.add(contact);
+            addPersonCity(city, fname);
+            addPersonState(state, fname);
             return true;
         }
 
+    }
+
+    public void addPersonCity(String city, String fname){
+
+        if (personbyCity.containsKey(city)) { 
+            personbyCity.get(city).add(fname);
+        }else{
+            personbyCity.computeIfAbsent(city, k -> new ArrayList<>()).add(fname);
+        }
+        
+    }
+
+    public void addPersonState(String state, String fname){
+        if(personbyState.containsKey(state)){
+            personbyState.get(state).add(fname);
+        }else{
+            personbyState.computeIfAbsent(state, k -> new ArrayList<>()).add(fname);
+        }
+    }
+
+    public void personCity(){
+        if (personbyCity.isEmpty()) {
+            System.out.println("No Contact Found..!");
+        }else{
+            for (Map.Entry<String, List<String>> entry : personbyCity.entrySet()) {
+                System.out.println(entry);
+            }
+        }
+    }
+
+    public void personState(){
+        if (personbyState.isEmpty()) {
+            System.out.println("No Contact Found...!");
+        }else{
+            for(Map.Entry<String, List<String>> entry : personbyState.entrySet()) {
+                System.out.println(entry);
+            }
+        }
     }
 
     public void editContact(String name){
@@ -301,6 +344,7 @@ public class AddressBook {
     Map<String, AddressBook> addressBooks;
     
     
+    
     public AddressBook() {
         addressBooks = new HashMap<>();
     }
@@ -410,6 +454,8 @@ public class AddressBook {
             System.out.println("5. Display All Contact");
             System.out.println("6. Search Contact by City");
             System.out.println("7. Search Contact by State");
+            System.out.println("8. Person by City");
+            System.out.println("9. Person by State");
             System.out.println("0. Exit");
 
             int choice = scanner.nextInt();
@@ -489,6 +535,16 @@ public class AddressBook {
                     System.out.println("Enter State Name : ");
                     String state = scanner.nextLine();
                     addressbooks.searchByState(state);
+                    break;
+
+                case 8:
+                    System.out.println("Person in various City :");
+                    addressbooks.contact.personCity();
+                    break;
+                
+                case 9:
+                    System.out.println("Person in various State : ");
+                    addressbooks.contact.personState();
                     break;
 
                 case 0:
